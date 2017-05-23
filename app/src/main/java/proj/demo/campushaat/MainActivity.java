@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody>
                         response) {
+                    if(response.isSuccessful()){
+                        if(response.)
+                    }
 
 
                 }
