@@ -16,7 +16,7 @@ public class ResponseBody {
         return baseResponse;
     }
 
-    static class Address{
+    static public class Address{
         String addressId;
         String city,country,lattitude,locality,longitude,room,state;
 
@@ -52,7 +52,7 @@ public class ResponseBody {
             return state;
         }
     }
-    static class BaseResponse{
+    static public class BaseResponse{
         String message,statusCode;
 
         public String getMessage() {

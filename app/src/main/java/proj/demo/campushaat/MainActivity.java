@@ -5,13 +5,21 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -24,7 +32,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
+        OnMapReadyCallback,View.OnClickListener {
     Spinner citySpinner, stateSpinner, countrySpinner;
     TextInputEditText houseContent, localityContent, pincodeContent;
     TextInputLayout houseLayout, localityLayout, pincodeLayout;
@@ -34,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private final static int LOCALITY_LENGTH=20;
     ArrayList<String> states, cities, countries;
     Button submit;
+    float longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,31 +54,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setSpinnerAdapters();
         setInputFilters();
         setItemSelectedListener();
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        submit.setOnClickListener(this);
 
-        submit.setOnClickListener(v -> {
-            RequestBody requestBody=new RequestBody("1","504B","New delhi","110034","delhi","sadasd","asdasd","Sdsds","dsdsd");
-            Gson gson=new Gson();
-            String data=gson.toJson(requestBody);
-
-            Call<ResponseBody> createAddress= RestClient
-                    .getServiceAuth(ICreateAddress.class).createAddress("application/json",data);
-            createAddress.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody>
-                        response) {
-                    if(response.isSuccessful()){
-                        if(response.)
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                }
-            });
-        });
     }
 
     private void setData() {
@@ -157,10 +147,49 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         stateSpinner.setOnItemSelectedListener(this);
         citySpinner.setOnItemSelectedListener(this);
     }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        LatLng sydney = new LatLng(-33.852, 151.211);
+        Marker marker=googleMap.addMarker(new MarkerOptions().position(sydney)
+                .title("Marker in Sydney").draggable(true));
+        marker.setDraggable(true);
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12.0f));
+    }
+    private String toString(TextInputEditText editText){
+        return editText.getText().toString();
+    }
+    private boolean isStringEmpty(TextInputEditText textInputEditText){
+        return toString(textInputEditText).trim().equals("");
+    }
 
     @Override
-    protected void onDestroy() {
+    public void onClick(View v) {
+        if(isStringEmpty(localityContent)&&isStringEmpty(houseContent)&&isStringEmpty(pincodeContent)
+                &&cityId!=0&&stateId!=0&&countryId!=0) {
+            RequestBody requestBody = new RequestBody("1", toString(houseContent),
+                    toString(localityContent), toString(pincodeContent), cityId + "", stateId + "",
+                    countryId + "", longitude + "", "" + latitude);
+            Call<ResponseBody> createAddress = RestClient
+                    .getServiceAuth(ICreateAddress.class).createAddress(requestBody);
+            createAddress.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body().getBaseResponse().getStatusCode().equals("200")) {
+                            Log.d("Body", response.body().toString());
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d("exception", t.toString());
 
-        super.onDestroy();
+                }
+            });
+        }
+        else {
+            Toast.makeText(this,"Please Fill All Details",Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
