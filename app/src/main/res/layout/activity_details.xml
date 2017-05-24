@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:orientation="vertical"
+
+    android:layout_height="match_parent"
+    tools:context="proj.demo.campushaat.DetailsActivity">
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:padding="5dp"
+        android:layout_weight="1"
+        android:id="@+id/topPanel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:padding="5dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:paddingBottom="10dp"
+
+        android:text="HOUSE"
+        android:id="@+id/house_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView            android:paddingBottom="10dp"
+
+                         android:layout_alignParentRight="true"
+        android:id="@+id/house_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+            <View
+                android:layout_below="@id/house_content"
+                android:background="@color/divider_color"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    <TextView            android:paddingBottom="10dp"
+
+                         android:layout_alignParentLeft="true"
+
+        android:text="LOCALITY"
+        android:id="@+id/locality_label"
+        android:layout_below="@id/house_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView            android:paddingBottom="10dp"
+
+                         android:layout_alignParentRight="true"
+
+        android:layout_below="@id/house_content"
+        android:id="@+id/locality_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    />
+            <View
+                android:layout_below="@id/locality_content"
+                android:background="@color/divider_color"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    <TextView
+        android:paddingBottom="10dp"
+
+        android:text="City"
+        android:id="@+id/city_label"
+        android:layout_below="@+id/locality_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:paddingBottom="10dp"
+
+        android:layout_below="@+id/locality_content"
+        android:id="@+id/city_content"
+        android:layout_alignParentRight="true"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+            <View
+                android:layout_below="@id/city_content"
+                android:background="@color/divider_color"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    <TextView            android:paddingBottom="10dp"
+
+                         android:text="STATE"
+        android:id="@+id/state_label"
+        android:layout_below="@id/city_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:paddingBottom="10dp"
+
+        android:layout_below="@id/city_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/state_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+            <View
+                android:layout_below="@id/state_content"
+                android:background="@color/divider_color"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    <TextView            android:paddingBottom="10dp"
+
+                         android:text="Country"
+        android:layout_below="@id/state_label"
+        android:id="@+id/country_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_alignParentRight="true"
+        android:paddingBottom="10dp"
+
+        android:layout_below="@id/state_content"
+        android:id="@+id/country_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+            <View
+                android:layout_below="@id/country_content"
+                android:background="@color/divider_color"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+    <TextView            android:paddingBottom="10dp"
+
+                         android:text="Pincode"
+        android:layout_below="@+id/country_label"
+        android:id="@+id/pincode_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_alignParentRight="true"
+        android:paddingBottom="10dp"
+
+        android:layout_below="@id/country_content"
+        android:id="@+id/pincode_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_weight="1"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/map"
+              android:tag="maps"
+              android:name="com.google.android.gms.maps.SupportMapFragment"
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              />
+
+</LinearLayout>

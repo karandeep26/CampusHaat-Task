@@ -1,10 +1,12 @@
 package proj.demo.campushaat.network;
 
+import java.io.Serializable;
+
 /**
  * Created by stpl on 5/23/2017.
  */
 
-public class ResponseBody {
+public class ResponseBody implements Serializable {
     Address address;
     BaseResponse baseResponse;
 
@@ -16,8 +18,8 @@ public class ResponseBody {
         return baseResponse;
     }
 
-    static public class Address{
-        String addressId;
+    static public class Address implements Serializable{
+        String addressId,zipCode;
         String city,country,lattitude,locality,longitude,room,state;
 
         public String getAddressId() {
@@ -51,8 +53,12 @@ public class ResponseBody {
         public String getState() {
             return state;
         }
+
+        public String getZipCode() {
+            return zipCode;
+        }
     }
-    static public class BaseResponse{
+    static public class BaseResponse implements Serializable{
         String message,statusCode;
 
         public String getMessage() {

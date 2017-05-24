@@ -11,6 +11,7 @@ import android.text.Spanned;
 public class CustomInputFilter implements InputFilter {
     private TextInputLayout layout;
     private String lengthError,contentError;
+    int length;
 
     public CustomInputFilter(TextInputLayout layout, int length) {
         this.layout = layout;
@@ -21,6 +22,7 @@ public class CustomInputFilter implements InputFilter {
             lengthError="Max 20 Characters Allowed";
         }
         contentError="Only Alphabets and Numeric Allowed";
+        this.length=length;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class CustomInputFilter implements InputFilter {
             return "";
         }
         layout.setErrorEnabled(false);
-        int keep = 6 - (dest.length() - (dend - dstart));
+        int keep = length - (dest.length() - (dend - dstart));
         if (6 - (dest.length() - (dend - dstart)) == 0) {
             layout.setErrorEnabled(true);
             layout.setError(lengthError);
