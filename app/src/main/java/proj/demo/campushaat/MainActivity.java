@@ -285,7 +285,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("exception", t.toString());
+                    progressDialog.dismiss();
+
 
                 }
             });
