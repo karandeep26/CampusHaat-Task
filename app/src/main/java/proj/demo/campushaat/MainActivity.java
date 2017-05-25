@@ -95,17 +95,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
             setmGoogleApiClient();
+
+
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
+
         bindViews();
         setData();
         setSpinnerAdapters();
@@ -114,7 +116,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         displayLocationSettingsRequest();
         submit.setOnClickListener(this);
 
+
     }
+
 
     private void setData() {
         countries = new ArrayList<>();
@@ -210,6 +214,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     @Override
     public void onMapReady(GoogleMap map) {
+        mMap = map;
+
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String bestProvider = locationManager.getBestProvider(criteria, true);
@@ -219,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         locationManager.requestLocationUpdates(bestProvider, 2000, 0,this);
-        mMap = map;
         marker=mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)).draggable(true));
         map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
@@ -268,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Call<ResponseBody> createAddress = RestClient
                     .getServiceAuth(ICreateAddress.class).createAddress(requestBody);
             ProgressDialog progressDialog=new ProgressDialog(this);
+            progressDialog.setTitle("Sending Data To Server");
             progressDialog.show();
             createAddress.enqueue(new Callback<ResponseBody>() {
                 @Override

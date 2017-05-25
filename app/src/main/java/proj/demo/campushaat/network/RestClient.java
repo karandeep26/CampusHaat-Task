@@ -1,7 +1,5 @@
 package proj.demo.campushaat.network;
 
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
